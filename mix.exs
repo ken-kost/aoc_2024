@@ -26,4 +26,10 @@ defmodule Aoc2024.MixProject do
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
   end
+
+  def cli do
+    [
+      preferred_envs: ["aoc.test": :test]
+    ]
+  end
 end
