@@ -23,6 +23,7 @@ defmodule Aoc2024.Solutions.Y24.Day01Test do
   defp solve(input, part) do
     problem =
       input
+      |> String.trim_trailing("\n")
       |> Input.as_file()
       |> Solution.parse(part)
 
@@ -31,14 +32,15 @@ defmodule Aoc2024.Solutions.Y24.Day01Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    3   4
+    4   3
+    2   5
+    1   3
+    3   9
+    3   3
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 11 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
@@ -50,17 +52,18 @@ defmodule Aoc2024.Solutions.Y24.Day01Test do
   #   assert {:ok, @part_one_solution} == AoC.run(2024, 1, :part_one)
   # end
 
-  # test "part two example" do
-  #   input = ~S"""
-  #   This is an
-  #   example input.
-  #   replace with
-  #   an example from
-  #   the AoC website.
-  #   """
-  #
-  #   assert CHANGE_ME == solve(input, :part_two)
-  # end
+  test "part two example" do
+    input = ~S"""
+    3   4
+    4   3
+    2   5
+    1   3
+    3   9
+    3   3
+    """
+
+    assert 31 == solve(input, :part_two)
+  end
 
   # You may also implement a test to validate the part two to ensure that you
   # did not broke your shared modules when implementing another problem.
