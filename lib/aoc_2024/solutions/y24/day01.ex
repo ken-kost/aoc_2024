@@ -7,16 +7,22 @@ defmodule Aoc2024.Solutions.Y24.Day01 do
     |> Enum.reduce({[], []}, fn line, acc ->
       {acc1, acc2} = acc
       {num1, num2} = parse_line(line)
-      {Enum.sort([num1 | acc1]), Enum.sort([num2 | acc2])}
+      {[num1 | acc1], [num2 | acc2]}
     end)
   end
 
   def part_one({list1, list2}) do
-    Enum.reduce(Stream.zip(list1, list2), 0, fn {num1, num2}, acc -> abs(num1 - num2) + acc end)
+    Enum.sort(list1)
+    |> Stream.zip(Enum.sort(list2))
+    |> Enum.reduce(0, fn {num1, num2}, acc -> abs(num1 - num2) + acc end)
   end
 
   def part_two({list1, list2}) do
-    Enum.reduce(list1, 0, fn num, acc -> count_number(list2, num, 0) * num + acc end)
+    list2 = Enum.sort(list2)
+
+    list1
+    |> Enum.sort()
+    |> Enum.reduce(0, fn num, acc -> count_number(list2, num) * num + acc end)
   end
 
   defp parse_line(line) do
@@ -30,10 +36,13 @@ defmodule Aoc2024.Solutions.Y24.Day01 do
     end)
   end
 
-  defp count_number([], _, solution), do: solution
-
-  defp count_number([number | rest], number, solution),
-    do: count_number(rest, number, solution + 1)
-
-  defp count_number([_ | rest], number, solution), do: count_number(rest, number, solution)
+  defp count_number(list, num) do
+    Enum.reduce_while(list, 0, fn e, acc ->
+      cond do
+        e < num -> {:cont, acc}
+        e == num -> {:cont, acc + 1}
+        true -> {:halt, acc}
+      end
+    end)
+  end
 end
