@@ -20,7 +20,7 @@ defmodule Aoc2024.Solutions.Y24.Day02 do
   def part_two(problem) do
     Enum.reduce(problem, 0, fn line, acc ->
       Enum.reduce_while(0..(length(line) - 1), 0, fn i, acc ->
-        {_, [n1, n2 | _] = line} = List.pop_at(line, i)
+        [n1, n2 | _] = line = List.delete_at(line, i)
 
         case check_levels(line, n1 < n2) do
           1 -> {:halt, 1}
