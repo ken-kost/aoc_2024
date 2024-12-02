@@ -23,6 +23,7 @@ defmodule Aoc2024.Solutions.Y24.Day02Test do
   defp solve(input, part) do
     problem =
       input
+      |> String.trim_trailing("\n")
       |> Input.as_file()
       |> Solution.parse(part)
 
@@ -51,17 +52,18 @@ defmodule Aoc2024.Solutions.Y24.Day02Test do
   #   assert {:ok, @part_one_solution} == AoC.run(2024, 2, :part_one)
   # end
 
-  # test "part two example" do
-  #   input = ~S"""
-  #   This is an
-  #   example input.
-  #   replace with
-  #   an example from
-  #   the AoC website.
-  #   """
-  #
-  #   assert CHANGE_ME == solve(input, :part_two)
-  # end
+  test "part two example" do
+    input = ~S"""
+    7 6 4 2 1
+    1 2 7 8 9
+    9 7 6 2 1
+    1 3 2 4 5
+    8 6 4 4 1
+    1 3 6 7 9
+    """
+
+    assert 4 == solve(input, :part_two)
+  end
 
   # You may also implement a test to validate the part two to ensure that you
   # did not broke your shared modules when implementing another problem.
