@@ -23,7 +23,6 @@ defmodule Aoc2024.Solutions.Y24.Day02Test do
   defp solve(input, part) do
     problem =
       input
-      |> String.trim_trailing("\n")
       |> Input.as_file()
       |> Solution.parse(part)
 

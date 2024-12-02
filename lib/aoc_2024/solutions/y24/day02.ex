@@ -3,7 +3,7 @@ defmodule Aoc2024.Solutions.Y24.Day02 do
 
   def parse(input, _part) do
     input
-    |> Input.stream!()
+    |> Input.stream!(trim: true)
     |> Enum.map(fn line ->
       Enum.map(String.split(line, " "), fn part ->
         elem(Integer.parse(part), 0)
