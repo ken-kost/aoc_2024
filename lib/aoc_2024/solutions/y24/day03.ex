@@ -84,70 +84,76 @@ defmodule Aoc2024.Solutions.Y24.Day03 do
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, ",", b1, ")" | rest], solution, f) do
     case {Integer.parse(a1), Integer.parse(b1)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, ",", b1, b2, ")" | rest], solution, f) do
     case {Integer.parse(a1), Integer.parse(b1 <> b2)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, a2, ",", b1, ")" | rest], solution, f) do
     case {Integer.parse(a1 <> a2), Integer.parse(b1)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, a2, ",", b1, b2, ")" | rest], solution, f) do
     case {Integer.parse(a1 <> a2), Integer.parse(b1 <> b2)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, ",", b1, b2, b3, ")" | rest], solution, f) do
     case {Integer.parse(a1), Integer.parse(b1 <> b2 <> b3)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, a2, a3, ",", b1, ")" | rest], solution, f) do
     case {Integer.parse(a1 <> a2 <> a3), Integer.parse(b1)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, a2, ",", b1, b2, b3, ")" | rest], solution, f) do
     case {Integer.parse(a1 <> a2), Integer.parse(b1 <> b2 <> b3)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
   defp find_muls_and_dos(["m", "u", "l", "(", a1, a2, a3, ",", b1, b2, ")" | rest], solution, f) do
     case {Integer.parse(a1 <> a2 <> a3), Integer.parse(b1 <> b2)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
-  defp find_muls_and_dos(["m", "u", "l", "(", a1, a2, a3, ",", b1, b2, b3, ")" | rest], solution, f) do
+  defp find_muls_and_dos(
+         ["m", "u", "l", "(", a1, a2, a3, ",", b1, b2, b3, ")" | rest],
+         solution,
+         f
+       ) do
     case {Integer.parse(a1 <> a2 <> a3), Integer.parse(b1 <> b2 <> b3)} do
-      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + (n1 * n2 * f), f)
+      {{n1, _}, {n2, _}} -> find_muls_and_dos(rest, solution + n1 * n2 * f, f)
       _ -> find_muls_and_dos(rest, solution, f)
     end
   end
 
-  defp find_muls_and_dos(["d", "o", "(", ")" | rest], solution, _f), do: find_muls_and_dos(rest, solution, 1)
+  defp find_muls_and_dos(["d", "o", "(", ")" | rest], solution, _f),
+    do: find_muls_and_dos(rest, solution, 1)
 
-  defp find_muls_and_dos(["d", "o", "n", "'", "t", "(", ")" | rest], solution, _f), do: find_muls_and_dos(rest, solution, 0)
+  defp find_muls_and_dos(["d", "o", "n", "'", "t", "(", ")" | rest], solution, _f),
+    do: find_muls_and_dos(rest, solution, 0)
 
   defp find_muls_and_dos([_ | rest], solution, f), do: find_muls_and_dos(rest, solution, f)
 end
