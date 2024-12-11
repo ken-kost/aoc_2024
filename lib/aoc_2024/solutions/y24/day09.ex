@@ -2,33 +2,118 @@ defmodule Aoc2024.Solutions.Y24.Day09 do
   alias AoC.Input
 
   def parse(input, _part) do
-    # This function will receive the input path or an %AoC.Input.TestInput{}
-    # struct. To support the test you may read both types of input with either:
-    #
-    # * Input.stream!(input), equivalent to File.stream!/1
-    # * Input.stream!(input, trim: true), equivalent to File.stream!/2
-    # * Input.read!(input), equivalent to File.read!/1
-    #
-    # The role of your parse/2 function is to return a "problem" for the solve/2
-    # function.
-    #
-    # For instance:
-    #
-    # input
-    # |> Input.stream!()
-    # |> Enum.map!(&my_parse_line_function/1)
-
-    Input.read!(input)
+    input
+    |> Input.read!()
+    |> String.trim()
+    |> String.graphemes()
+    |> Enum.map(&String.to_integer/1)
   end
 
   def part_one(problem) do
-    # This function receives the problem returned by parse/2 and must return
-    # today's problem solution for part one.
-
-    problem
+    rev_blocks = build_disk(problem)
+    blocks = :lists.reverse(rev_blocks)
+    blocks = compress(blocks, Enum.filter(rev_blocks, fn {_, v} -> v != :free end), [])
+    Enum.reduce(blocks, 0, fn {index, value}, acc -> acc + index * value end)
   end
 
-  # def part_two(problem) do
-  #   problem
-  # end
+  def part_two(problem) do
+    rev_blocks = build_disk(problem)
+
+    {free_chunks, files_chunks} =
+      rev_blocks
+      |> :lists.reverse()
+      |> Enum.chunk_by(fn {_, v} -> v end)
+      |> Enum.map(fn [{_, fid_or_free} | _] = list ->
+        {Enum.map(list, &elem(&1, 0)), fid_or_free}
+      end)
+      |> Enum.split_with(fn {_, id} -> id == :free end)
+
+    free_chunks = Enum.map(free_chunks, fn {bids, :free} -> {bids, length(bids)} end)
+    rev_files_chunks = :lists.reverse(files_chunks)
+    blocks = defrag(rev_files_chunks, free_chunks, [])
+
+    Enum.reduce(blocks, 0, fn {indexes, value}, acc ->
+      acc + Enum.reduce(indexes, 0, fn index, acc -> acc + index * value end)
+    end)
+  end
+
+  defp build_disk(problem) do
+    build_disk(problem, :file, 0, 0, [])
+  end
+
+  defp build_disk([0 | t], :file, block_id, file_id, acc) do
+    build_disk(t, :free, block_id, file_id + 1, acc)
+  end
+
+  defp build_disk([0 | t], :free, block_id, file_id, acc) do
+    build_disk(t, :file, block_id, file_id, acc)
+  end
+
+  defp build_disk([h | t], :file, block_id, file_id, acc) do
+    build_disk([h - 1 | t], :file, block_id + 1, file_id, [{block_id, file_id} | acc])
+  end
+
+  defp build_disk([h | t], :free, block_id, file_id, acc) do
+    build_disk([h - 1 | t], :free, block_id + 1, file_id, [{block_id, :free} | acc])
+  end
+
+  defp build_disk([], _, _, _, acc) do
+    acc
+  end
+
+  defp compress([{bid, :free} | blocks], [{fbid, file_id} | movables], acc) when bid <= fbid do
+    compress(blocks, movables, [{bid, file_id} | acc])
+  end
+
+  defp compress([{bid, file_id} | blocks], [{fbid, _} | _] = movables, acc) when bid <= fbid do
+    compress(blocks, movables, [{bid, file_id} | acc])
+  end
+
+  defp compress(_blocks, _movables, acc) do
+    acc
+  end
+
+  defp defrag(
+         [{[low_bid | _] = bids, file_id} = h | rev_files_chunks],
+         [{[high_free | _], _} | _] = free_chunks,
+         acc
+       )
+       when high_free < low_bid do
+    space = take_space(free_chunks, bids)
+
+    [bid | _] = bids
+
+    case space do
+      {[free_bid | _] = free_bids, free_chunks} when free_bid < bid ->
+        defrag(rev_files_chunks, free_chunks, [{free_bids, file_id} | acc])
+
+      _ ->
+        defrag(rev_files_chunks, free_chunks, [h | acc])
+    end
+  end
+
+  defp defrag(rest, _, acc) do
+    rest ++ acc
+  end
+
+  defp take_space(free_chunks, bids) do
+    take_space(free_chunks, length(bids), [])
+  end
+
+  defp take_space([{vids, larger_len} | rest], len, skipped) when len < larger_len do
+    {vids_used, vids_rest} = Enum.split(vids, len)
+    {vids_used, :lists.reverse(skipped, [{vids_rest, larger_len - len} | rest])}
+  end
+
+  defp take_space([{vids, same_len} | rest], same_len, skipped) do
+    {vids, :lists.reverse(skipped, rest)}
+  end
+
+  defp take_space([skip | rest], len, skipped) do
+    take_space(rest, len, [skip | skipped])
+  end
+
+  defp take_space([], _, _) do
+    nil
+  end
 end
