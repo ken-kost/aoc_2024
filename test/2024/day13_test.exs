@@ -31,14 +31,24 @@ defmodule Aoc2024.Solutions.Y24.Day13Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    Button A: X+94, Y+34
+    Button B: X+22, Y+67
+    Prize: X=8400, Y=5400
+
+    Button A: X+26, Y+66
+    Button B: X+67, Y+21
+    Prize: X=12748, Y=12176
+
+    Button A: X+17, Y+86
+    Button B: X+84, Y+37
+    Prize: X=7870, Y=6450
+
+    Button A: X+69, Y+23
+    Button B: X+27, Y+71
+    Prize: X=18641, Y=10279
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 480 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
@@ -50,17 +60,27 @@ defmodule Aoc2024.Solutions.Y24.Day13Test do
   #   assert {:ok, @part_one_solution} == AoC.run(2024, 13, :part_one)
   # end
 
-  # test "part two example" do
-  #   input = ~S"""
-  #   This is an
-  #   example input.
-  #   replace with
-  #   an example from
-  #   the AoC website.
-  #   """
-  #
-  #   assert CHANGE_ME == solve(input, :part_two)
-  # end
+  test "part two example" do
+    input = ~S"""
+    Button A: X+94, Y+34
+    Button B: X+22, Y+67
+    Prize: X=8400, Y=5400
+
+    Button A: X+26, Y+66
+    Button B: X+67, Y+21
+    Prize: X=12748, Y=12176
+
+    Button A: X+17, Y+86
+    Button B: X+84, Y+37
+    Prize: X=7870, Y=6450
+
+    Button A: X+69, Y+23
+    Button B: X+27, Y+71
+    Prize: X=18641, Y=10279
+    """
+
+    assert 875_318_608_908 == solve(input, :part_two)
+  end
 
   # You may also implement a test to validate the part two to ensure that you
   # did not broke your shared modules when implementing another problem.
