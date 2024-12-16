@@ -31,14 +31,21 @@ defmodule Aoc2024.Solutions.Y24.Day14Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    p=0,4 v=3,-3
+    p=6,3 v=-1,-3
+    p=10,3 v=-1,2
+    p=2,0 v=2,-1
+    p=0,0 v=1,3
+    p=3,0 v=-2,-2
+    p=7,6 v=-1,-3
+    p=3,0 v=-1,-2
+    p=9,3 v=2,3
+    p=7,3 v=-1,2
+    p=2,4 v=2,-3
+    p=9,5 v=-3,-3
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 12 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
