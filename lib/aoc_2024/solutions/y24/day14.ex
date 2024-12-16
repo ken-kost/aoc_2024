@@ -4,6 +4,8 @@ defmodule Aoc2024.Solutions.Y24.Day14 do
   @x_max if Mix.env() == :test, do: 11, else: 101
   @y_max if Mix.env() == :test, do: 7, else: 103
 
+  @tree [{50, 51}, {49, 51}, {51, 51}, {48, 52}, {49, 52}, {50, 52}, {51, 52}, {52, 52}]
+
   def parse(input, _part) do
     input
     |> Input.stream!(trim: true)
@@ -48,14 +50,9 @@ defmodule Aoc2024.Solutions.Y24.Day14 do
     robot_positions = Enum.map(robot_positions, &move_robot(&1, 1))
     positions = Enum.map(robot_positions, fn {x, y, _xv, _yv} -> {x, y} end)
 
-    if Enum.all?(
-         [{50, 51}, {49, 51}, {51, 51}, {48, 52}, {49, 52}, {50, 52}, {51, 52}, {52, 52}],
-         &(&1 in positions)
-       ) do
-      solution + 1
-    else
-      iterate_until(robot_positions, solution + 1)
-    end
+    if Enum.all?(@tree, &(&1 in positions)),
+      do: solution + 1,
+      else: iterate_until(robot_positions, solution + 1)
   end
 
   defp move_robot(solution, 0), do: solution
