@@ -13,18 +13,14 @@ defmodule Aoc2024.Solutions.Y24.Day13 do
 
   def part_one(problem) do
     problem
-    |> Enum.map(fn %{a: a, b: b, p: {xp, yp}} ->
-      p = {xp, yp}
-      play(a, b, p)
-    end)
+    |> Enum.map(fn %{a: a, b: b, p: p} -> play(a, b, p) end)
     |> Enum.sum()
   end
 
   def part_two(problem) do
     problem
     |> Enum.map(fn %{a: a, b: b, p: {xp, yp}} ->
-      p = {xp + 10_000_000_000_000, yp + 10_000_000_000_000}
-      play(a, b, p)
+      play(a, b, {xp + 10_000_000_000_000, yp + 10_000_000_000_000})
     end)
     |> Enum.sum()
   end
