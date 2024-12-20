@@ -17,7 +17,7 @@ defmodule Aoc2024.Solutions.Y24.Day10 do
           end
       end)
     end)
-    |> Tuple.append(if(part == :part_one, do: MapSet.new(), else: 0))
+    |> Tuple.insert_at(2, if(part == :part_one, do: MapSet.new(), else: 0))
   end
 
   def part_one({trailheads, map, init}) do

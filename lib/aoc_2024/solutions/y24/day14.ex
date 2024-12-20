@@ -13,7 +13,7 @@ defmodule Aoc2024.Solutions.Y24.Day14 do
       ~r/-?\d+(\.\d+)?/
       |> Regex.scan(line)
       |> Enum.reduce({}, fn [e], acc ->
-        Tuple.append(acc, String.to_integer(e))
+        Tuple.insert_at(acc, tuple_size(acc), String.to_integer(e))
       end)
     end)
   end
