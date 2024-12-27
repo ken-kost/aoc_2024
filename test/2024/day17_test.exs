@@ -38,6 +38,7 @@ defmodule Aoc2024.Solutions.Y24.Day17Test do
     Program: 0,1,5,4,3,0
     """
 
+    # 3,1,0,7,0,1,7,0,2 wrong solution
     assert "4,6,3,5,6,3,5,2,1,0" == solve(input, :part_one)
   end
 
@@ -50,17 +51,17 @@ defmodule Aoc2024.Solutions.Y24.Day17Test do
   #   assert {:ok, @part_one_solution} == AoC.run(2024, 17, :part_one)
   # end
 
-  # test "part two example" do
-  #   input = ~S"""
-  #   This is an
-  #   example input.
-  #   replace with
-  #   an example from
-  #   the AoC website.
-  #   """
-  #
-  #   assert CHANGE_ME == solve(input, :part_two)
-  # end
+  test "part two example" do
+    input = ~S"""
+    Register A: 2024
+    Register B: 0
+    Register C: 0
+
+    Program: 0,3,5,4,3,0
+    """
+
+    assert 117_440 == solve(input, :part_two)
+  end
 
   # You may also implement a test to validate the part two to ensure that you
   # did not broke your shared modules when implementing another problem.
