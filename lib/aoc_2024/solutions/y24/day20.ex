@@ -1,8 +1,7 @@
 defmodule Aoc2024.Solutions.Y24.Day20 do
   alias AoC.Input
 
-  @limit 100
-  @cheat_steps 2
+  @limit if Mix.env() == :test, do: 50, else: 100
 
   def parse(input, _part) do
     map =
@@ -25,14 +24,17 @@ defmodule Aoc2024.Solutions.Y24.Day20 do
     {map, start, finish}
   end
 
-  def part_one({map, start, finish}) do
+  def part_one({map, start, finish}, cheat_steps \\ 2) do
     map
     |> steps_to_finish(start, finish, _seen = MapSet.new())
     |> then(fn
-      steps_to_finish -> Enum.map(steps_to_finish, &count_cheats(&1, steps_to_finish))
+      steps_to_finish ->
+        Enum.map(steps_to_finish, &count_cheats(&1, steps_to_finish, cheat_steps))
     end)
     |> Enum.sum()
   end
+
+  def part_two(problem, cheat_steps \\ 20), do: part_one(problem, cheat_steps)
 
   defp steps_to_finish(map, start, finish, seen) do
     map
@@ -51,14 +53,14 @@ defmodule Aoc2024.Solutions.Y24.Day20 do
     {steps + 1, [{location, steps} | acc]}
   end
 
-  defp count_cheats({{x, y} = location, max_steps}, steps_to_finish) do
-    Enum.reduce((x - @cheat_steps)..(x + @cheat_steps), 0, fn x, count ->
-      Enum.reduce((y - @cheat_steps)..(y + @cheat_steps), count, fn y, count ->
+  defp count_cheats({{x, y} = location, max_steps}, steps_to_finish, cheat_steps) do
+    Enum.reduce((x - cheat_steps)..(x + cheat_steps), 0, fn x, count ->
+      Enum.reduce((y - cheat_steps)..(y + cheat_steps), count, fn y, count ->
         distance = manhattan_distance({x, y}, location)
 
         cond do
           {x, y} == location -> count
-          distance > @cheat_steps -> count
+          distance > cheat_steps -> count
           not acceptable?(steps_to_finish, max_steps).({x, y}, distance) -> count
           true -> count + 1
         end
@@ -80,8 +82,4 @@ defmodule Aoc2024.Solutions.Y24.Day20 do
   end
 
   defp manhattan_distance({x1, y1}, {x2, y2}), do: abs(x1 - x2) + abs(y1 - y2)
-
-  # def part_two(problem) do
-  #   problem
-  # end
 end
