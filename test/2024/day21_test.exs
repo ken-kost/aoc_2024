@@ -31,14 +31,14 @@ defmodule Aoc2024.Solutions.Y24.Day21Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    029A
+    980A
+    179A
+    456A
+    379A
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 126_384 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
