@@ -12,18 +12,18 @@ defmodule Aoc2024.Solutions.Y24.Day21 do
     end)
   end
 
-  def part_one(problem) do
-    pads = [numeric(), direct(), direct()]
+  # def part_one(problem) do
+  #   pads = [numeric(), direct(), direct()]
 
-    problem
-    |> Enum.map(fn {number, code} ->
-      code
-      |> String.to_charlist()
-      |> press(pads)
-      |> then(fn count -> number * count end)
-    end)
-    |> Enum.sum()
-  end
+  #   problem
+  #   |> Enum.map(fn {number, code} ->
+  #     code
+  #     |> String.to_charlist()
+  #     |> press(pads)
+  #     |> then(fn count -> number * count end)
+  #   end)
+  #   |> Enum.sum()
+  # end
 
   def part_two(problem) do
     pads = [numeric() | List.duplicate(direct(), 25)]
@@ -159,9 +159,9 @@ defmodule Aoc2024.Solutions.Y24.Day21.Keypad do
     diff = sub(pad.position, to)
     moves = do_press(diff, to, pad.grid)
 
-    Enum.each(moves, fn move ->
-      ^to = Enum.reduce(move, pad.position, &add/2)
-    end)
+    # Enum.each(moves, fn move ->
+    #   ^to = Enum.reduce(move, pad.position, &add/2)
+    # end)
 
     moves =
       Enum.map(moves, fn move ->
