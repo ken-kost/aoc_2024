@@ -49,17 +49,16 @@ defmodule Aoc2024.Solutions.Y24.Day22Test do
   #   assert {:ok, @part_one_solution} == AoC.run(2024, 22, :part_one)
   # end
 
-  # test "part two example" do
-  #   input = ~S"""
-  #   This is an
-  #   example input.
-  #   replace with
-  #   an example from
-  #   the AoC website.
-  #   """
-  #
-  #   assert CHANGE_ME == solve(input, :part_two)
-  # end
+  test "part two example" do
+    input = ~S"""
+    1
+    10
+    100
+    2024
+    """
+
+    assert 23 == solve(input, :part_two)
+  end
 
   # You may also implement a test to validate the part two to ensure that you
   # did not broke your shared modules when implementing another problem.
