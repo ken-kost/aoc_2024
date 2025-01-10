@@ -31,14 +31,41 @@ defmodule Aoc2024.Solutions.Y24.Day23Test do
 
   test "part one example" do
     input = ~S"""
-    This is an
-    example input.
-    replace with
-    an example from
-    the AoC website.
+    kh-tc
+    qp-kh
+    de-cg
+    ka-co
+    yn-aq
+    qp-ub
+    cg-tb
+    vc-aq
+    tb-ka
+    wh-tc
+    yn-cg
+    kh-ub
+    ta-co
+    de-co
+    tc-td
+    tb-wq
+    wh-td
+    ta-ka
+    td-qp
+    aq-cg
+    wq-ub
+    ub-vc
+    de-ta
+    wq-aq
+    wq-vc
+    wh-yn
+    ka-de
+    kh-ta
+    co-tc
+    wh-qp
+    tb-vc
+    td-yn
     """
 
-    assert CHANGE_ME == solve(input, :part_one)
+    assert 7 == solve(input, :part_one)
   end
 
   # Once your part one was successfully sumbitted, you may uncomment this test
